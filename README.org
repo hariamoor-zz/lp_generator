@@ -1,0 +1,48 @@
+* RSDG Algorithm Implementation
+
+This is an implementation of a simplified version of Dr. Uli Kremer's RSDG algorithm for optimization of redundant services. The expected input is an XML file parsed from the .desc file with the provided parsing script.
+
+** Installation
+
+We use the Rust programming language for this tutorial. A Makefile is provided for convenience, supporting the following instructions:
+
+#+BEGIN_SRC bash
+make deps # installs Rust toolchain and build system
+make install <PATH> # installs executable to location of your choice
+#+END_SRC
+
+The Makefile is dependent on ~curl~; please make sure it is specified in your ~$PATH~. It also remains to the user to make sure that ~<PATH>/release/target/~ is supplied in ~$PATH~.
+
+*Note*: The ~make install~ command initializes a heavily-optimized build by default. This is so that performance of the resulting code is on par (theoretically) with the equivalent C++ code; this might be necessary for particularly large examples. This might take somewhat long - your patience is appreciated!
+
+** Usage
+
+Once this is done, the executable ~lp_generator~ is available as a CLI that supports the same interface as the provided skeleton.
+
+Please see ~lp_generator --help~ for the full list of options.
+
+** Why Rust?
+
+I had the following issues with the provided skeleton.
+
+1. I would have had to change some visibility modifiers or add getters to allow me to access the graph
+2. The copy I received did not properly initialize the graph
+3. I kept running into various buffer-overflows
+
+Therefore, I considered appropriate languages in terms of the following considerations:
+
++ *Safety* - the code should not cause undefined behavior in well-defined use cases (no segfaults)
++ *Reproducibility* - it should be as easy as possible to bootstrap the code
++ *Parity with C++ skeleton* - it should support the same user interface
+
+The following other languages were considered:
+
+*** Python
+
+The reproducibility story in Python is rather unsavory. In order to provide reproducibility, we would have to use multiple third-party systems to manage the Python runtime (by ersion) and the external dependencies (such as the XML parser).
+
+These details could be abstracted away in a Makefile, but there would still be some concerns with stability.
+
+*** Haskell
+
+The reproducibility story in Haskell is even worse than that in Python, although the language would be extremely /convenient/ for such a task.
