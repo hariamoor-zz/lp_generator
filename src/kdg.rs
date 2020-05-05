@@ -1,8 +1,5 @@
 use crate::Resource;
 
-use std::error::Error;
-use std::result::Result;
-
 fn model_set_objective_function(resource: &Resource) -> String {
     resource
         .knobs
@@ -74,7 +71,7 @@ fn model_set_edge_constraints(resource: &Resource) -> Vec<String> {
         .collect()
 }
 
-pub fn build_model(resource: Resource, budget: f64) -> Result<String, Box<dyn Error>> {
+pub fn build_model(resource: Resource, budget: f64) -> String {
     let objective = model_set_objective_function(&resource);
     let budget = model_set_budget_constraint(&resource, budget);
     let knob = model_set_knob_constraints(&resource);
@@ -92,14 +89,12 @@ pub fn build_model(resource: Resource, budget: f64) -> Result<String, Box<dyn Er
         .collect::<Vec<_>>()
         .join(" ");
 
-    let output = format!(
+    format!(
         "Maximize\n\t{}\nSubject To\n\t{}\n\t{}\n\t{}\nBinary\n\t{}\nEnd",
         objective,
         budget,
         knob.join("\n\t"),
         edge.join("\n\t"),
         binaries
-    );
-
-    Ok(output)
+    )
 }

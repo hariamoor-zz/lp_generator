@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     opt.app.set_extension("lp");
     let mut output = File::create(&opt.app)?;
 
-    output.write(build_model(resource, opt.budget)?.as_bytes())?;
+    output.write(build_model(resource, opt.budget).as_bytes())?;
 
     Ok(())
 }
