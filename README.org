@@ -46,3 +46,5 @@ These details could be abstracted away in a Makefile, but there would still be s
 *** Haskell
 
 The reproducibility story in Haskell is even worse than that in Python, although the language would be extremely /convenient/ for such a task.
+
+I'll leave the unsavory details at that.
