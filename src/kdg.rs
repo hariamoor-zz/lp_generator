@@ -42,7 +42,7 @@ fn model_set_knob_constraints(resource: &Resource) -> Vec<String> {
             let constraint = knob
                 .layers
                 .iter()
-                .flat_map(|layer| layer.basic_nodes.iter().map(|node| node.name.clone()))
+                .flat_map(|layer| layer.basic_nodes.iter().map(|node| node.name.as_str()))
                 .collect::<Vec<_>>()
                 .join(" + ");
 
@@ -84,7 +84,7 @@ pub fn build_model(resource: Resource, budget: f64) -> String {
         .flat_map(|knob| {
             knob.layers
                 .iter()
-                .flat_map(|layer| layer.basic_nodes.iter().map(|node| node.name.clone()))
+                .flat_map(|layer| layer.basic_nodes.iter().map(|node| node.name.as_str()))
         })
         .collect::<Vec<_>>()
         .join(" ");
