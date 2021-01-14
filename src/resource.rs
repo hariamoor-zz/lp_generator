@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::fmt::Debug;
+use std::{fmt::Debug, error::Error, result::Result};
 
 // Uses the serde-rs (de)serialization framework to
 // auto-generate code that parses the input XML file
@@ -50,7 +50,7 @@ mod tests {
     // in the project.
 
     #[test]
-    fn test_single() {
+    fn test_single() -> Result<(), Box<dyn Error>>{
         let s = r##"
             <resource>
                 <knob>
@@ -80,12 +80,13 @@ mod tests {
             }],
         };
 
-        let value: Resource = from_str(s).unwrap();
+        let value: Resource = from_str(s)?;
         assert_eq!(value, should_be);
+        Ok(())
     }
 
     #[test]
-    fn test_large() {
+    fn test_large() -> Result<(), Box<dyn Error>>{
         let s = r##"
             <resource>
                 <knob>
@@ -137,7 +138,8 @@ mod tests {
             }],
         };
 
-        let value: Resource = from_str(s).unwrap();
+        let value: Resource = from_str(s)?;
         assert_eq!(value, should_be);
+        Ok(())
     }
 }
